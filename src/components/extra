@@ -1,0 +1,6 @@
+ <CampsiteInfo campsite={this.state.campsites.filter(campsite => campsite.id === this.state.selectedCampsite)[0]} />
+
+
+  onCampsiteSelect(campsiteId) {
+    this.setState({selectedCampsite: campsiteId});// clicking on a campsite changes selected campsite value from null to that campsite
+    }            
