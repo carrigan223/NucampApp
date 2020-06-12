@@ -20,7 +20,7 @@ function RenderPartner ({partner}) {
 }
 
 
-function About(props) {
+function About() {   //at one point had the parameter props in there took dont know why?
 
     const partners = PARTNERS.map(partner => {
         return (
