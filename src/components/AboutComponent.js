@@ -1,6 +1,5 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
-import { PARTNERS } from '../shared/partners';
 import { Link } from 'react-router-dom';
 
 function RenderPartner ({partner}) {
@@ -20,9 +19,9 @@ function RenderPartner ({partner}) {
 }
 
 
-function About() {   //at one point had the parameter props in there took dont know why?
+function About(props) {   
 
-    const partners = PARTNERS.map(partner => {
+    const partners = props.partners.map(partner => {
         return (
             <Media tag="li" key={partner.id}>
                 <RenderPartner partner={partner} />

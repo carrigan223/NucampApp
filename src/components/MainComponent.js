@@ -40,7 +40,7 @@ class Main extends Component {
     return (
       <CampsiteInfo 
         campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
-        comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)[0]}
+        comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
       />
     );
   };
@@ -54,7 +54,7 @@ class Main extends Component {
             props.campsites} />} />
           <Route path='/directory/:campsiteId' component={CampsiteWithId} />
           <Route exact path='/contactus' component={Contact} />
-          <Route exact path='/aboutus' component={About} />
+          <Route exact path='/aboutus' component={About} /><About comments={this.props.comments}></About>
           <Redirect to='/home' />
         </Switch>
         <Footer />
