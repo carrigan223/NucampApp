@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Directory from './DirectoryComponents';
+import React, { Component } from 'react';//read more about what this is doing here
+import Directory from './DirectoryComponents';//
 import CampsiteInfo from './CampsiteInfoComponent';
 import About from './AboutComponent';
 import Header from './HeaderComponent';
@@ -25,17 +25,17 @@ class Main extends Component {
 //this render method is what is viewed in browswer
 //the header component also contains the navbar
   render() {
-    
+  
     const HomePage = () => {
       return (
-          <Home
+          <Home //home is returning the filtered items inour data
               campsite={this.props.campsites.filter(campsite => campsite.featured)[0]}
               promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
               partner={this.props.partners.filter(partner => partner.featured)[0]}
           />
       );
   }
-
+//come back and really break these down more top 
   const CampsiteWithId = ({match}) => {
     return (
       <CampsiteInfo 
@@ -44,7 +44,7 @@ class Main extends Component {
       />
     );
   };
-
+//make sure in my main im sending the data through
     return (
       <div>
         <Header />
@@ -54,7 +54,7 @@ class Main extends Component {
             props.campsites} />} />
           <Route path='/directory/:campsiteId' component={CampsiteWithId} />
           <Route exact path='/contactus' component={Contact} />
-          <Route exact path='/aboutus' component={About} /><About comments={this.props.comments}></About>
+          <Route exact path='/aboutus' render ={() => <About comments={this.props.comments} partners={this.props.partners} />} />
           <Redirect to='/home' />
         </Switch>
         <Footer />
