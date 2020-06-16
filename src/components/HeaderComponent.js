@@ -5,15 +5,15 @@ import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron,
 import { NavLink } from 'react-router-dom';
 
 
-
+// this class renders the navbar/header and login
 class Header extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-          isNavOpen: false,
-          isModalOpen: false
+          isNavOpen: false,// default state of navbar
+          isModalOpen: false// default state of modal
         };
         
         this.toggleNav = this.toggleNav.bind(this);
@@ -25,19 +25,19 @@ class Header extends Component {
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
-    }
+    }//this function is returning the opposite state of navbar like a light switch on/off
 
     toggleModal() {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
-    }
+    }//this function is returning the opposite state of modal like a light switch on/off
 
     handleLogin(event) {
         alert(`Username: ${this.username.value} Password: ${this.password.value} Remember: ${this.remember.checked}`);
         this.toggleModal();
         event.preventDefault();
-    }
+    }//this function is alerting us with values input into login fields while also toggling the model closed
 
     render() {
         return (

@@ -1,11 +1,18 @@
-import { createStore } from 'redux';
-import { Reducer, initialState } from './reducer';
+import { createStore, combineReducers } from "redux";
+import { Campsites } from "./campsites";
+import { Promotions } from "./promotions";
+import { Comments } from "./comments";
+import { Partners } from "./partners";
 
 export const ConfigureStore = () => {
-    const store = createStore(
-        Reducer,
-        initialState
-    );
+  const store = createStore(
+    combineReducers({
+      campsites: Campsites,
+      promotions: Promotions,
+      comments: Comments,
+      partners: Partners,
+    })
+  );
 
-    return store;
+  return store;
 };

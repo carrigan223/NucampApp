@@ -33,7 +33,8 @@ function RenderCampsite({ campsite }) {
     </div>
   );
 } // renderCampsite method is showing the selected campsite info while RenderComments akes care of the comments
-function RenderComments({ comments }) {
+//using object destructuring to grab the props addcomment and campsite id and passing them to child comment form
+function RenderComments({ comments, addComment, campsiteId }) {
   if (comments) {
     return (
       <div className="col-md-5 m-1">
@@ -52,7 +53,7 @@ function RenderComments({ comments }) {
             </p>
           </div>
         ))}
-        <CommentForm />
+        <CommentForm campsiteId={campsiteId} addComment={addComment} />
       </div>
     );
   } else {
@@ -78,7 +79,11 @@ function CampsiteInfo(props) {
         </div>
         <div className="row">
           <RenderCampsite campsite={props.campsite} />
-          <RenderComments comments={props.comments} />
+          <RenderComments 
+            comments={props.comments}
+            addComment={props.addComment}
+            campsiteId={props.campsite.id}
+          />
         </div>
       </div>
     );
@@ -109,7 +114,8 @@ class CommentForm extends Component {
   }
 
   handleSubmit(values) {
-    alert("Current state is: " + JSON.stringify(values)); //should alert us with an object containing the values we enterd for our feedback
+    this.toggleModal();
+    this.props.addComment(this.props.campsiteId, values.author, values.comment, values.rating);//when form is submited the action will take the values of the form and upadte the comment list
   }
   //this method is for toggling the state of our modal true or false
   toggleModal() {
@@ -132,7 +138,7 @@ class CommentForm extends Component {
             <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <Row className="form-group">
                 <Col>
-                  <Label>Rating</Label>
+                  <Label htmlFor="rating">Rating</Label>
                   <br />
                   <Control.select
                     model=".rating"
@@ -179,7 +185,7 @@ class CommentForm extends Component {
               </Row>
               <Row className="form-group">
                 <Col>
-                  <Label>Comment</Label>
+                  <Label htmlFor="comment">Comment</Label>
                   <br />
                   <Control.textarea
                     model=".comment"
