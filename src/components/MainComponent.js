@@ -6,7 +6,7 @@ import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
-import { addComment } from '../redux/ActionsCreator';
+import { addComment, fetchCampsites } from "../redux/ActionsCreator";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //setting the variable mapStatetoProps to be exprted
@@ -20,39 +20,49 @@ const mapStateToProps = (state) => {
 };
 //setting mapDispatchToProps to be exported, this makes the addcomment function available as a prop
 const mapDispatchToProps = {
-  addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text))
+  addComment: (campsiteId, rating, author, text) =>
+    (addComment(campsiteId, rating, author, text)),
+  fetchCampsites: () => (fetchCampsites())
 };
 
 class Main extends Component {
   //this render method is what is viewed in browswer
   //the header component also contains the navbar
+
+  componentDidMount() {
+    this.props.fetchCampsites();
+  }
+
   render() {
     const HomePage = () => {
       return (
-        <Home //home is returning the filtered items inour data
-          campsite={
-            this.props.campsites.filter((campsite) => campsite.featured)[0]
-          }
-          promotion={
-            this.props.promotions.filter((promotion) => promotion.featured)[0]
-          }
-          partner={this.props.partners.filter((partner) => partner.featured)[0]}
-        />
+          <Home
+              campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
+              campsitesLoading={this.props.campsites.isLoading}
+              campsitesErrMess={this.props.campsites.errMess}
+              promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
+              partner={this.props.partners.filter(partner => partner.featured)[0]}
+          />
       );
-    };
+  }
     //come back and really break these down more top
     const CampsiteWithId = ({ match }) => {
       return (
         <CampsiteInfo
           campsite={
-            this.props.campsites.filter(
+            this.props.campsites.campsites.filter(
               (campsite) => campsite.id === +match.params.campsiteId
             )[0]
           }
+          isLoading={this.props.campsites.isLoading}
+          errMess={this.props.campsites.errMess}
           comments={this.props.comments.filter(
             (comment) => comment.campsiteId === +match.params.campsiteId
           )}
-          addComment = {this.props.addComment}/* able to give it the addcomment function as a prop*/
+          addComment={
+            this.props.addComment
+          }
+           /* able to give it the addcomment function as a prop*/
         />
       );
     };
