@@ -16,7 +16,8 @@ import {
 } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
-import { Loading } from './LoadingComponent';
+import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -26,7 +27,7 @@ function RenderCampsite({ campsite }) {
   return (
     <div className="col-md-5 m-1">
       <Card>
-        <CardImg top src={campsite.image} alt={campsite.name} />
+        <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
         <CardBody>
           <CardText>{campsite.description}</CardText>
         </CardBody>
@@ -78,7 +79,7 @@ function CampsiteInfo(props) {
         <div className="row">
           <div className="col">
             <h4>{props.errMess}</h4>
-          </div> 
+          </div>
         </div>
       </div>
     );
@@ -100,7 +101,7 @@ function CampsiteInfo(props) {
         </div>
         <div className="row">
           <RenderCampsite campsite={props.campsite} />
-          <RenderComments 
+          <RenderComments
             comments={props.comments}
             addComment={props.addComment}
             campsiteId={props.campsite.id}
@@ -136,7 +137,12 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(this.props.campsiteId, values.author, values.comment, values.rating);//when form is submited the action will take the values of the form and upadte the comment list
+    this.props.addComment(
+      this.props.campsiteId,
+      values.author,
+      values.comment,
+      values.rating
+    ); //when form is submited the action will take the values of the form and upadte the comment list
   }
   //this method is for toggling the state of our modal true or false
   toggleModal() {
@@ -228,4 +234,4 @@ class CommentForm extends Component {
   }
 }
 
-export default CampsiteInfo;//exporting this component
+export default CampsiteInfo; //exporting this component

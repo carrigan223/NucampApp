@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 
 export const Campsites = (
   state = {
-    isLading: true,
+    isLoading: true,
     errMess: null,
     campsites: [],
   },
