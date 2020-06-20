@@ -35,8 +35,8 @@ function RenderCampsite({ campsite }) {
     </div>
   );
 } // renderCampsite method is showing the selected campsite info while RenderComments akes care of the comments
-//using object destructuring to grab the props addcomment and campsite id and passing them to child comment form
-function RenderComments({ comments, addComment, campsiteId }) {
+//using object destructuring to grab the props postComment and campsite id and passing them to child comment form
+function RenderComments({ comments, postComment, campsiteId }) {
   if (comments) {
     return (
       <div className="col-md-5 m-1">
@@ -55,7 +55,7 @@ function RenderComments({ comments, addComment, campsiteId }) {
             </p>
           </div>
         ))}
-        <CommentForm campsiteId={campsiteId} addComment={addComment} />
+        <CommentForm campsiteId={campsiteId} postComment={postComment} />
       </div>
     );
   } else {
@@ -103,7 +103,7 @@ function CampsiteInfo(props) {
           <RenderCampsite campsite={props.campsite} />
           <RenderComments
             comments={props.comments}
-            addComment={props.addComment}
+            postComment={props.postComment}
             campsiteId={props.campsite.id}
           />
         </div>
@@ -137,7 +137,7 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(
+    this.props.postComment(
       this.props.campsiteId,
       values.author,
       values.comment,

@@ -7,7 +7,7 @@ import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 import { actions } from 'react-redux-form';
-import { addComment, fetchCampsites, fetchComments, fetchPromotions } from '../redux/ActionCreators';
+import { postComment, fetchCampsites, fetchComments, fetchPromotions } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 //setting the variable mapStatetoProps to be exprted
@@ -19,9 +19,9 @@ const mapStateToProps = (state) => {
     promotions: state.promotions,
   };
 };
-//setting mapDispatchToProps to be exported, this makes the addcomment function available as a prop
+//setting mapDispatchToProps to be exported, this makes the postComment function available as a prop
 const mapDispatchToProps = {
-  addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
+  postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text)),
   fetchCampsites: () => (fetchCampsites()),
   resetFeedbackForm: () => (actions.reset('feedbackForm')),
   fetchComments: () => (fetchComments()),
@@ -67,10 +67,10 @@ class Main extends Component {
             (comment) => comment.campsiteId === +match.params.campsiteId
           )}
           commentsErrMess={this.props.comments.errMess}
-          addComment={
-            this.props.addComment
+          postComment={
+            this.props.postComment
           }
-           /* able to give it the addcomment function as a prop*/
+           /* able to give it the postComment function as a prop*/
         />
       );
     };
