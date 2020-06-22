@@ -1,12 +1,16 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { Fade, Stagger } from "react-animation-components";
+
 
 function RenderPartner ({partner}) {
     if (partner) {
         return (
             <React.Fragment>
-                <Media object src={partner.image} width="150" alt={partner.name} />
+                <Media object src={baseUrl + partner.image} width="150" alt={partner.name} />
                 <Media body className="ml-5 mb-4">
                     <Media heading>{partner.name}</Media>
                     {partner.description}
@@ -21,13 +25,6 @@ function RenderPartner ({partner}) {
 
 function About(props) {   
 
-    const partners = props.partners.map(partner => {
-        return (
-            <Media tag="li" key={partner.id}>
-                <RenderPartner partner={partner} />
-            </Media>
-        );
-    });
 
     return (
         <div className="container">
@@ -82,13 +79,44 @@ function About(props) {
                     <h3>Community Partners</h3>
                 </div>
                 <div className="col mt-4">
-                    <Media list>
-                        {partners}
-                    </Media>
+                    <PartnerList partners={props.partners} />
                 </div>
             </div>
         </div>
     );
+}
+
+
+function PartnerList({partners}) {
+        const mappedPartners = partners.partners.map(partner => {
+            return (
+                <Fade in key={partner.id}>
+                    <Media tag="li" key={partner.id}>
+                        <RenderPartner partner={partner} />
+                    </Media>
+                </Fade>
+        );
+    });
+
+    if (partners.isLoading) {
+        return (
+            <Loading />
+        );
+    }
+    if (partners.errMess) {
+        return (
+            <h4>{partners.errMess}</h4>
+        )
+    }
+    return (
+        <div className="col mt-4">
+                <Media list>
+                    <Stagger in>
+                        {mappedPartners} 
+                    </Stagger>       
+                </Media>
+        </div>
+    );  
 }
 
 export default About;
