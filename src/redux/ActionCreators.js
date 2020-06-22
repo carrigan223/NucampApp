@@ -203,31 +203,40 @@ export const addPartners = (partners) => ({
 
 // this fuction is posting feeback to db.json
 export const postFeedback = (feedback) => (dispatch) => {
-  return fetch(baseUrl + 'feedback', {
+  return fetch(baseUrl + "feedback", {
     method: "POST",
     body: JSON.stringify(feedback),
     headers: {
-      "Content-Type": "application/json"
-    }
-    //above is using the fetch method send the feedback to the server 
+      "Content-Type": "application/json",
+    },
+    //above is using the fetch method send the feedback to the server
     //and take the feedback and stringify it for a JSON file
 
     //below is chaining the then method to either alert us of success
     //or to throw an error and describe the error if not succesful
-  }).then(response => {
-    if (response.ok) {
-      return response;
-    } else {
-      const error = new Error(`Error ${response.status}: ${response.statusText}`);
-      error.response = response;
-      throw error
-    }
-  },
-    error => { throw error; }
-  ).then(response => response.json())
-   .then(response => alert("Thank you for your feeback\n" + JSON.stringify(response))) 
-   .catch(error => {
-     console.log('send feedback', error.message);
-     alert('your feedback could not be sesubmited\nError: ' + error.message);
-   });
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) =>
+      alert("Thank you for your feeback\n" + JSON.stringify(response))
+    )
+    .catch((error) => {
+      console.log("send feedback", error.message);
+      alert("your feedback could not be sesubmited\nError: " + error.message);
+    });
 };

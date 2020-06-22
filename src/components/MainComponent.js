@@ -13,7 +13,7 @@ import {
   fetchComments,
   fetchPromotions,
   fetchPartners,
-  postFeedback
+  postFeedback,
 } from "../redux/ActionCreators";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -25,12 +25,11 @@ const mapStateToProps = (state) => {
     comments: state.comments,
     partners: state.partners,
     promotions: state.promotions,
-    
   };
 };
 //setting mapDispatchToProps to be exported, this makes the postComment function available as a prop
 const mapDispatchToProps = {
-  postFeedback: (feedback) => postFeedback(feedback),//making our post feedback available as a prop
+  postFeedback: (feedback) => postFeedback(feedback), //making our post feedback available as a prop
   postComment: (campsiteId, rating, author, text) =>
     postComment(campsiteId, rating, author, text),
   fetchCampsites: () => fetchCampsites(),
@@ -62,7 +61,11 @@ class Main extends Component {
           }
           campsitesLoading={this.props.campsites.isLoading}
           campsitesErrMess={this.props.campsites.errMess}
-          partner={this.props.partners.partners.filter(partner => partner.featured)[0]}
+          partner={
+            this.props.partners.partners.filter(
+              (partner) => partner.featured
+            )[0]
+          }
           partnersLoading={this.props.partners.isLoading}
           partnersErrMess={this.props.partners.errMess}
           promotion={
@@ -117,7 +120,7 @@ class Main extends Component {
                 exact
                 path="/contactus"
                 component={() => (
-                  <Contact 
+                  <Contact
                     resetFeedbackForm={this.props.resetFeedbackForm}
                     postFeedback={this.props.postFeedback}
                   />
